@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -155,7 +155,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">57x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -170,21 +170,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -199,6 +185,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,21 +197,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -235,12 +235,12 @@ import { useBackend } from "main/utils/useBackend";
 function MealsOfferedCell({ date, diningHall }) {
   const {
     data: meals,
-    error,
-    status,
+    error: _error,
+    status: _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
     [`/api/diningcommons/${date}/${diningHall}`],
-    { 
+    {
       url: `/api/diningcommons/${date}/${diningHall}`,
     },
     // Stryker disable next-line all : don't test default value of empty list
@@ -248,16 +248,18 @@ function MealsOfferedCell({ date, diningHall }) {
     true,
   );
 &nbsp;
-  if (error?.response?.status === 500)
-    return &lt;span&gt;no meals offered&lt;/span&gt;;
-  // logic: the api call returns error 500 when there are no meals
+  if (meals.length === 0) return &lt;span&gt;no meals offered&lt;/span&gt;;
+  // logic: the api call returns error 500 when there are no meals, and meals remains empty (due to the initialData empty list)
+  // disabled all
 &nbsp;
   return (
     &lt;&gt;
       {meals.map((meal, index) =&gt; (
         &lt;React.Fragment key={meal.code}&gt;
           {index &gt; 0 &amp;&amp; " "}
-          &lt;Link to={`/diningcommons/${date}/${diningHall}/${meal.code}`}&gt;{meal.name}&lt;/Link&gt;
+          &lt;Link to={`/diningcommons/${date}/${diningHall}/${meal.code}`}&gt;
+            {meal.name}
+          &lt;/Link&gt;
         &lt;/React.Fragment&gt; // we have two siblings (" " and link) so a fragment is needed to wrap them together
       ))}
     &lt;/&gt; // this is also a fragment wrapper, but with no key since we're not inside of a list
@@ -282,9 +284,7 @@ export default function DiningCommonsTable({ commons, date }) {
       Header: "Meals Offered Today",
       accessor: "code",
       id: "mealsOfferedToday", // by default the id is the accessor, but since our first column has the same accessor we need a different id here
-      Cell: ({ value }) =&gt; (
-        &lt;MealsOfferedCell date={date} diningHall={value} /&gt;
-      ),
+      Cell: ({ value }) =&gt; &lt;MealsOfferedCell date={date} diningHall={value} /&gt;,
     },
     {
       Header: "Has Dining Cam",
@@ -316,7 +316,7 @@ export default function DiningCommonsTable({ commons, date }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-14T02:23:49.128Z
+                at 2025-11-15T02:57:20.008Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
