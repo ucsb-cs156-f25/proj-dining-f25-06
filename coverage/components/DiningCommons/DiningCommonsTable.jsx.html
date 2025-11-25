@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -145,7 +145,11 @@
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
 <a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,7 +159,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">73x</span>
+<span class="cline-any cline-yes">72x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -170,7 +174,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -235,8 +243,8 @@ import { useBackend } from "main/utils/useBackend";
 function MealsOfferedCell({ date, diningHall }) {
   const {
     data: meals,
-    error: _error,
-    status: _status,
+    error,
+    status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
     [`/api/diningcommons/${date}/${diningHall}`],
@@ -244,26 +252,30 @@ function MealsOfferedCell({ date, diningHall }) {
       url: `/api/diningcommons/${date}/${diningHall}`,
     },
     // Stryker disable next-line all : don't test default value of empty list
-    [],
+    undefined,
     true,
   );
 &nbsp;
-  if (meals.length === 0) return &lt;span&gt;no meals offered&lt;/span&gt;;
-  // logic: the api call returns error 500 when there are no meals, and meals remains empty (due to the initialData empty list)
-  // disabled all
+  // Stryker disable OptionalChaining
+  if (error?.response?.status === 500) return &lt;span&gt;no meals offered&lt;/span&gt;;
+  if (status === "loading") return &lt;span&gt;Loading...&lt;/span&gt;;
 &nbsp;
-  return (
-    &lt;&gt;
-      {meals.map((meal, index) =&gt; (
-        &lt;React.Fragment key={meal.code}&gt;
-          {index &gt; 0 &amp;&amp; " "}
-          &lt;Link to={`/diningcommons/${date}/${diningHall}/${meal.code}`}&gt;
-            {meal.name}
-          &lt;/Link&gt;
-        &lt;/React.Fragment&gt; // we have two siblings (" " and link) so a fragment is needed to wrap them together
-      ))}
-    &lt;/&gt; // this is also a fragment wrapper, but with no key since we're not inside of a list
-  ); // https://react.dev/reference/react/Fragment#rendering-a-list-of-fragments
+  if (meals) {
+    return (
+      &lt;&gt;
+        {meals.map((meal, index) =&gt; (
+          &lt;React.Fragment key={meal.code}&gt;
+            {index &gt; 0 &amp;&amp; " "}
+            &lt;Link to={`/diningcommons/${date}/${diningHall}/${meal.code}`}&gt;
+              {meal.name}
+            &lt;/Link&gt;
+          &lt;/React.Fragment&gt; // we have two siblings (" " and link) so a fragment is needed to wrap them together
+        ))}
+      &lt;/&gt; // this is also a fragment wrapper, but with no key since we're not inside of a list
+    ); // https://react.dev/reference/react/Fragment#rendering-a-list-of-fragments
+  }
+&nbsp;
+  return &lt;span&gt;An error has occured.&lt;/span&gt;;
 }
 &nbsp;
 export default function DiningCommonsTable({ commons, date }) {
@@ -316,7 +328,7 @@ export default function DiningCommonsTable({ commons, date }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-25T19:43:48.124Z
+                at 2025-11-25T20:10:39.068Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
