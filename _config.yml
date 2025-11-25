@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/proj-dining-f25-06
 owner: ucsb-cs156-f25
 repo_name: proj-dining-f25-06
-pull_requests: [{"author":{"id":"U_kgDOCm9VLg","is_bot":false,"login":"fortenatalie","name":"Natalie Forte"},"headRefName":"nf-trying-to-get-rid-of-errors-in-main","number":32,"title":"NF - Ignore This","url":"https://github.com/ucsb-cs156-f25/proj-dining-f25-06/pull/32"},{"author":{"id":"U_kgDOB2QqkQ","is_bot":false,"login":"jml557","name":"Julia L"},"headRefName":"jml-replace-example-brand","number":27,"title":"jml - change NavBar and browser titles to \"UCSB Dining\"","url":"https://github.com/ucsb-cs156-f25/proj-dining-f25-06/pull/27"}]
+pull_requests: [{"author":{"id":"U_kgDOCm9VLg","is_bot":false,"login":"fortenatalie","name":"Natalie Forte"},"headRefName":"nf-trying-to-get-rid-of-errors-in-main","number":32,"title":"NF - Finxing(?) Failing Tests in Main","url":"https://github.com/ucsb-cs156-f25/proj-dining-f25-06/pull/32"}]
