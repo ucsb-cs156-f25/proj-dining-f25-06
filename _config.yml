@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/proj-dining-f25-06
 owner: ucsb-cs156-f25
 repo_name: proj-dining-f25-06
-pull_requests: [{"author":{"id":"U_kgDOCm9VLg","is_bot":false,"login":"fortenatalie","name":"Natalie Forte"},"headRefName":"nf-messing-with-node-and-stryker","number":33,"title":"NF - Changing the Node Version that Stryker Uses in Main ","url":"https://github.com/ucsb-cs156-f25/proj-dining-f25-06/pull/33"}]
+pull_requests: []
